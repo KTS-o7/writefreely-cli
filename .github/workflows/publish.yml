@@ -1,0 +1,33 @@
+name: Publish to PyPI
+
+# Runs only when a version tag is pushed, e.g.:
+#   git tag v0.1.1 && git push origin v0.1.1
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10
+
+      - name: Check the tag matches __version__
+        run: |
+          version=$(sed -n 's/^__version__ = "\(.*\)"$/\1/p' src/writefreely_cli.py)
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match __version__ = $version in src/writefreely_cli.py"
+            exit 1
+          fi
+
+      - run: uv build
+      - run: uvx twine check --strict dist/*
+
+      # --check-url skips files PyPI already has, so re-running a tag is safe.
+      - run: uv publish --check-url https://pypi.org/simple/
+        env:
+          UV_PUBLISH_TOKEN: ${{ secrets.PYPI_API_TOKEN }}

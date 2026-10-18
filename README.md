@@ -140,6 +140,13 @@ Never run publish, unpublish, edit-live, delete or blog/account commands unless 
 - The server allows one login attempt per alias every 3 seconds.
 - The API does not allow changing your username.
 
+## Releasing
+
+1. Bump `__version__` in `src/writefreely_cli.py` and merge to `main`.
+2. Tag and push: `git tag v0.1.1 && git push origin v0.1.1`.
+
+The `Publish to PyPI` workflow builds, checks that the tag matches `__version__`, and uploads using the `PYPI_API_TOKEN` repo secret (a token scoped to this project only).
+
 ## Not covered
 
 Instance admin pages, import, export, invites and stats. WriteFreely only allows these with a browser login, not an API token.
