@@ -1,5 +1,5 @@
 [build-system]
-requires = ["hatchling>=1.24"]
+requires = ["hatchling>=1.27"]
 build-backend = "hatchling.build"
 
 [project]
@@ -8,6 +8,9 @@ dynamic = ["version"]
 description = "Small CLI for self-hosted WriteFreely blogs, built for coding agents"
 readme = "README.md"
 requires-python = ">=3.9"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Krishnatejaswi S", email = "shentharkrishnatejaswi@gmail.com" }]
 dependencies = []
 keywords = ["writefreely", "blog", "cli", "claude-code", "opencode", "agents"]
 classifiers = [
@@ -33,7 +36,7 @@ sources = ["src"]
 only-include = ["src/writefreely_cli.py"]
 
 [tool.hatch.build.targets.sdist]
-only-include = ["src/writefreely_cli.py", "README.md", "skills"]
+only-include = ["src/writefreely_cli.py", "README.md", "LICENSE", "skills"]
 
 [tool.ruff]
 line-length = 120
