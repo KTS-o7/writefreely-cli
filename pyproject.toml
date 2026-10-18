@@ -1,0 +1,50 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "writefreely-cli"
+dynamic = ["version"]
+description = "Small CLI for self-hosted WriteFreely blogs, built for coding agents"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = []
+keywords = ["writefreely", "blog", "cli", "claude-code", "opencode", "agents"]
+classifiers = [
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content :: News/Diary",
+]
+
+[project.urls]
+Homepage = "https://github.com/KTS-o7/writefreely-cli"
+Issues = "https://github.com/KTS-o7/writefreely-cli/issues"
+
+[project.scripts]
+wfc = "writefreely_cli:run"
+writefreely-cli = "writefreely_cli:run"
+
+[tool.hatch.version]
+path = "src/writefreely_cli.py"
+
+[tool.hatch.build.targets.wheel]
+sources = ["src"]
+only-include = ["src/writefreely_cli.py"]
+
+[tool.hatch.build.targets.sdist]
+only-include = ["src/writefreely_cli.py", "README.md", "skills"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S"]
+# S310: urllib with a user-configured https URL is the whole point of the tool.
+ignore = ["S310", "UP006", "UP007", "UP035", "UP045"]
+
+[tool.mypy]
+# mypy cannot target 3.9 any more; 3.9 compatibility is checked by running on 3.9.
+python_version = "3.10"
+strict = true
